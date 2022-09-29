@@ -62,12 +62,12 @@ const RESOURCES = {
 "assets/assets/images/warning.png": "8bd35f65c9a4676f03f489777bb08e57",
 "assets/assets/images/web.png": "181ab35594f7786ff8c797eee3345004",
 "assets/assets/images/whatsapp.png": "1656ddd0b7be4105269e51e19d13486a",
-"assets/assets/translations/de.json": "e0c531bd3611c8c07d187afbc8faa7b9",
-"assets/assets/translations/en.json": "e0c531bd3611c8c07d187afbc8faa7b9",
+"assets/assets/translations/de.json": "4cb4079c681652928eb529a104a715fc",
+"assets/assets/translations/en.json": "4cb4079c681652928eb529a104a715fc",
 "assets/FontManifest.json": "0baa2ce67c559a129fdbc7c17004f192",
 "assets/fonts/MaterialIcons-Regular.otf": "95db9098c58fd6db106f1116bae85a0b",
 "assets/logoWhite.png": "87ff900659dbf0cc4175f21bf6bc2533",
-"assets/NOTICES": "0e08371e843b478f2c4947d5d7acb0c6",
+"assets/NOTICES": "7f2c7aedd0060431872081746b846543",
 "assets/packages/cupertino_icons/assets/CupertinoIcons.ttf": "6d342eb68f170c97609e9da345464e5e",
 "assets/packages/fluttertoast/assets/toastify.css": "a85675050054f179444bc5ad70ffc635",
 "assets/packages/fluttertoast/assets/toastify.js": "e7006a0a033d834ef9414d48db3be6fc",
@@ -331,20 +331,21 @@ const RESOURCES = {
 "assets/packages/libphonenumber_plugin/assets/js/stringbuffer.js": "5d8ac81dc841740b2a94e8daa7be8027",
 "assets/packages/libphonenumber_plugin/js/libphonenumber.js": "8578efe7b5232496cd05944ae9ae8ce8",
 "assets/packages/libphonenumber_plugin/js/stringbuffer.js": "5d8ac81dc841740b2a94e8daa7be8027",
+"assets/shaders/ink_sparkle.frag": "4396ea9448065bd26a6fcea17e711449",
 "assets/splashScreenGif.gif": "208fac45fbfc26cd500bf3ae2b7796db",
-"canvaskit/canvaskit.js": "c2b4e5f3d7a3d82aed024e7249a78487",
-"canvaskit/canvaskit.wasm": "4b83d89d9fecbea8ca46f2f760c5a9ba",
-"canvaskit/profiling/canvaskit.js": "ae2949af4efc61d28a4a80fffa1db900",
-"canvaskit/profiling/canvaskit.wasm": "95e736ab31147d1b2c7b25f11d4c32cd",
+"canvaskit/canvaskit.js": "2bc454a691c631b07a9307ac4ca47797",
+"canvaskit/canvaskit.wasm": "bf50631470eb967688cca13ee181af62",
+"canvaskit/profiling/canvaskit.js": "38164e5a72bdad0faa4ce740c9b8e564",
+"canvaskit/profiling/canvaskit.wasm": "95a45378b69e77af5ed2bc72b2209b94",
 "favicon.png": "3f32822f29c1ee6fbb907753493abb97",
-"flutter.js": "eb2682e33f25cd8f1fc59011497c35f8",
+"flutter.js": "f85e6fb278b0fd20c349186fb46ae36d",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "a467c3c4c4d00006597ad244f85b4433",
-"/": "a467c3c4c4d00006597ad244f85b4433",
-"main.dart.js": "9e8d81412b75a7c3cbcfcb343bd991d0",
+"index.html": "ca8eb76cb9bc03d7bca7e8f5342083db",
+"/": "ca8eb76cb9bc03d7bca7e8f5342083db",
+"main.dart.js": "38cf35a3229436eb625c33eedf1e3433",
 "manifest.json": "5512dcc970ca0f3a048b127471ca230d",
 "version.json": "30c8a8b9c1eec289b6a1e17b76224efb"
 };
@@ -354,7 +355,6 @@ const RESOURCES = {
 const CORE = [
   "main.dart.js",
 "index.html",
-"assets/NOTICES",
 "assets/AssetManifest.json",
 "assets/FontManifest.json"];
 // During install, the TEMP cache is populated with the application shell files.
@@ -453,9 +453,11 @@ self.addEventListener("fetch", (event) => {
     .then((cache) =>  {
       return cache.match(event.request).then((response) => {
         // Either respond with the cached resource, or perform a fetch and
-        // lazily populate the cache.
+        // lazily populate the cache only if the resource was successfully fetched.
         return response || fetch(event.request).then((response) => {
-          cache.put(event.request, response.clone());
+          if (response && Boolean(response.ok)) {
+            cache.put(event.request, response.clone());
+          }
           return response;
         });
       })

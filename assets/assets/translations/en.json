@@ -227,7 +227,8 @@
   "street_no_required":"street no required",
   "dark_theme":"DarkTheme",
   "uploaded_document":"Uploaded Document",
-  "book_appointment":"Book Appointment"
+  "book_appointment":"Book Appointment",
+  "file_size_error":"Falsche Dateigröße"
 
 
 }
