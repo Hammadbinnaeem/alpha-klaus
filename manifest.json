@@ -1,11 +1,11 @@
 {
-    "name": "Just Business Web",
-    "short_name": "Just Business Web",
+    "name": "alpha_klaus",
+    "short_name": "alpha_klaus",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "Just Business Web Project.",
+    "description": "A new Flutter project.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
